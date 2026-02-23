@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CrossPlatformDataTransfer.Application\CrossPlatformDataTransfer.Application.csproj" />
+    <ProjectReference Include="..\CrossPlatformDataTransfer.Infrastructure\CrossPlatformDataTransfer.Infrastructure.csproj" />
+    <ProjectReference Include="..\CrossPlatformDataTransfer.Infrastructure.Security\CrossPlatformDataTransfer.Infrastructure.Security.csproj" />
+  </ItemGroup>
+</Project>

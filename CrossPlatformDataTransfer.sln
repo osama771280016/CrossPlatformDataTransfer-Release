@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossPlatformDataTransfer.Core", "CrossPlatformDataTransfer.Core\CrossPlatformDataTransfer.Core.csproj", "{EFD315A5-2CAA-445B-9F60-4840BBA742A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossPlatformDataTransfer.Infrastructure", "CrossPlatformDataTransfer.Infrastructure\CrossPlatformDataTransfer.Infrastructure.csproj", "{0CE0E6E5-45EC-4D2F-9483-7940DFC43364}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossPlatformDataTransfer.Infrastructure.Security", "CrossPlatformDataTransfer.Infrastructure.Security\CrossPlatformDataTransfer.Infrastructure.Security.csproj", "{E966AA92-C963-4A0C-A210-5D6D9286EAEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossPlatformDataTransfer.Application", "CrossPlatformDataTransfer.Application\CrossPlatformDataTransfer.Application.csproj", "{8D307F62-3BFB-42F2-93A8-E331F984F883}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossPlatformDataTransfer.CLI", "CrossPlatformDataTransfer.CLI\CrossPlatformDataTransfer.CLI.csproj", "{64E775B1-5B3C-4C5C-93A3-1F219BEACDE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossPlatformDataTransfer.UI", "CrossPlatformDataTransfer.UI\CrossPlatformDataTransfer.UI.csproj", "{0668F566-E503-4433-A704-697FFE8DEFA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossPlatformDataTransfer.Startup", "CrossPlatformDataTransfer.Startup\CrossPlatformDataTransfer.Startup.csproj", "{5CD22FEE-C2FB-47AE-97FA-7D7A8B9CDF65}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EFD315A5-2CAA-445B-9F60-4840BBA742A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFD315A5-2CAA-445B-9F60-4840BBA742A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFD315A5-2CAA-445B-9F60-4840BBA742A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFD315A5-2CAA-445B-9F60-4840BBA742A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CE0E6E5-45EC-4D2F-9483-7940DFC43364}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CE0E6E5-45EC-4D2F-9483-7940DFC43364}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CE0E6E5-45EC-4D2F-9483-7940DFC43364}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CE0E6E5-45EC-4D2F-9483-7940DFC43364}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E966AA92-C963-4A0C-A210-5D6D9286EAEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E966AA92-C963-4A0C-A210-5D6D9286EAEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E966AA92-C963-4A0C-A210-5D6D9286EAEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E966AA92-C963-4A0C-A210-5D6D9286EAEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D307F62-3BFB-42F2-93A8-E331F984F883}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D307F62-3BFB-42F2-93A8-E331F984F883}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D307F62-3BFB-42F2-93A8-E331F984F883}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D307F62-3BFB-42F2-93A8-E331F984F883}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64E775B1-5B3C-4C5C-93A3-1F219BEACDE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64E775B1-5B3C-4C5C-93A3-1F219BEACDE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64E775B1-5B3C-4C5C-93A3-1F219BEACDE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64E775B1-5B3C-4C5C-93A3-1F219BEACDE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0668F566-E503-4433-A704-697FFE8DEFA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0668F566-E503-4433-A704-697FFE8DEFA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0668F566-E503-4433-A704-697FFE8DEFA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0668F566-E503-4433-A704-697FFE8DEFA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CD22FEE-C2FB-47AE-97FA-7D7A8B9CDF65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CD22FEE-C2FB-47AE-97FA-7D7A8B9CDF65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CD22FEE-C2FB-47AE-97FA-7D7A8B9CDF65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CD22FEE-C2FB-47AE-97FA-7D7A8B9CDF65}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

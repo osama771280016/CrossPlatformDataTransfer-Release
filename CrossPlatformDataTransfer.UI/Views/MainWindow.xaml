@@ -1,0 +1,98 @@
+<Window x:Class="CrossPlatformDataTransfer.UI.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:CrossPlatformDataTransfer.UI.ViewModels"
+        mc:Ignorable="d"
+        Title="TransferAI - Secure Data Migration" Height="500" Width="850"
+        Background="#F8FAFC">
+    
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Header -->
+            <RowDefinition Height="*"/>    <!-- Content -->
+            <RowDefinition Height="Auto"/> <!-- Footer/Progress -->
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="TransferAI" FontSize="28" FontWeight="Bold" Foreground="#1E293B"/>
+            <TextBlock Text="Secure Cross-Platform Data Migration" Foreground="#64748B"/>
+        </StackPanel>
+
+        <!-- Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Device List Sidebar -->
+            <Border Grid.Column="0" Background="White" CornerRadius="8" BorderBrush="#E2E8F0" BorderThickness="1" Padding="15">
+                <DockPanel>
+                    <Button DockPanel.Dock="Bottom" Content="Scan Devices" 
+                            Command="{Binding DiscoverDevicesAsyncCommand}"
+                            Background="#3B82F6" Foreground="White" Padding="10" Margin="0,10,0,0">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="4"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    
+                    <TextBlock DockPanel.Dock="Top" Text="Available Devices" FontWeight="SemiBold" Margin="0,0,0,10" Foreground="#1E293B"/>
+                    
+                    <ListBox ItemsSource="{Binding Devices}" SelectedItem="{Binding SelectedDevice}" BorderThickness="0" Background="Transparent">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="#F1F5F9" BorderThickness="0,0,0,1" Padding="5,10">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Name}" FontWeight="Medium" Foreground="#334155"/>
+                                        <TextBlock Text="{Binding Type}" FontSize="11" Foreground="#94A3B8"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </Border>
+
+            <!-- Transfer Panel -->
+            <Border Grid.Column="1" Margin="20,0,0,0" Background="White" CornerRadius="8" BorderBrush="#E2E8F0" BorderThickness="1" Padding="30">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock Text="Ready to Transfer" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,10" Foreground="#1E293B"/>
+                    <TextBlock Text="Select a device from the list to start the secure migration process." 
+                               TextAlignment="Center" Foreground="#64748B" Margin="0,0,0,40" TextWrapping="Wrap"/>
+                    
+                    <Button Content="Start Secure Transfer" 
+                            Command="{Binding StartTransferAsyncCommand}"
+                            Width="220" Height="50" FontSize="16" FontWeight="SemiBold"
+                            Background="#10B981" Foreground="White">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="6"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- Footer / Progress -->
+        <StackPanel Grid.Row="2" Margin="0,20,0,0">
+            <Grid Margin="0,0,0,8">
+                <TextBlock Text="{Binding StatusMessage}" Foreground="#334155" FontWeight="Medium"/>
+                <TextBlock Text="{Binding ProgressText}" HorizontalAlignment="Right" Foreground="#64748B"/>
+            </Grid>
+            <ProgressBar Height="12" Value="{Binding TransferProgress}" 
+                         Background="#E2E8F0" Foreground="#3B82F6" BorderThickness="0">
+                <ProgressBar.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="6"/>
+                    </Style>
+                </ProgressBar.Resources>
+            </ProgressBar>
+        </StackPanel>
+    </Grid>
+</Window>

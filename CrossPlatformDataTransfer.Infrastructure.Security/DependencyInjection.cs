@@ -11,6 +11,7 @@ public static class DependencyInjection
         services.AddSingleton<IEncryptionService, HardenedEncryptionService>();
         services.AddSingleton<IKeyManagementService, KeyManagementService>();
         services.AddSingleton<IHashService, Sha256HashService>();
+        services.AddHttpClient<ILicenseService, LicenseService>();
         
         // Temporarily commented out until implementations are updated to match new Core interfaces
         // services.AddTransient<IKeyExchangeService, DiffieHellmanKeyExchangeService>();

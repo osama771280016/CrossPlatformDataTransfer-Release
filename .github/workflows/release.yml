@@ -1,0 +1,61 @@
+name: Enterprise Release Automation
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+env:
+  PROJECT: CrossPlatformDataTransfer.UI
+  CONFIG: Release
+  RUNTIME: win-x64
+  PUBLISH_DIR: publish/win-x64
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore Dependencies
+        run: dotnet restore
+
+      - name: Build & Publish (Single File EXE)
+        run: |
+          dotnet publish ${{ env.PROJECT }}/${{ env.PROJECT }}.csproj `
+            -c ${{ env.CONFIG }} `
+            -r ${{ env.RUNTIME }} `
+            --self-contained true `
+            /p:PublishSingleFile=true `
+            /p:IncludeNativeLibrariesForSelfExtract=true `
+            /p:PublishTrimmed=false `
+            /p:EnableCompressionInSingleFile=true `
+            /p:PublishReadyToRun=true `
+            -o ${{ env.PUBLISH_DIR }}
+
+      - name: Create ZIP Archive
+        shell: pwsh
+        run: |
+          Compress-Archive -Path "${{ env.PUBLISH_DIR }}/*" -DestinationPath "CrossPlatformDataTransfer_${{ github.ref_name }}_Portable.zip"
+
+      - name: Create GitHub Release & Upload Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          files: |
+            ${{ env.PUBLISH_DIR }}/CrossPlatformDataTransfer.UI.exe
+            CrossPlatformDataTransfer_${{ github.ref_name }}_Portable.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

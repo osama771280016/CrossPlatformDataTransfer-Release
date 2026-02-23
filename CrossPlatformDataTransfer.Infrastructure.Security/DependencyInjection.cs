@@ -4,8 +4,16 @@ using CrossPlatformDataTransfer.Infrastructure.Security.Services;
 
 namespace CrossPlatformDataTransfer.Infrastructure.Security;
 
+/// <summary>
+/// Dependency injection registration for the Security infrastructure layer.
+/// </summary>
 public static class DependencyInjection
 {
+    /// <summary>
+    /// Adds security-related services to the service collection.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddSecurityServices(this IServiceCollection services)
     {
         services.AddSingleton<IEncryptionService, HardenedEncryptionService>();
@@ -13,9 +21,9 @@ public static class DependencyInjection
         services.AddSingleton<IHashService, Sha256HashService>();
         services.AddHttpClient<ILicenseService, LicenseService>();
         
-        // Temporarily commented out until implementations are updated to match new Core interfaces
-        // services.AddTransient<IKeyExchangeService, DiffieHellmanKeyExchangeService>();
-        // services.AddSingleton<IPairingService, SecurePairingService>();
+        // Registering previously commented out services
+        services.AddTransient<IKeyExchangeService, DiffieHellmanKeyExchangeService>();
+        services.AddSingleton<IPairingService, SecurePairingService>();
         
         return services;
     }

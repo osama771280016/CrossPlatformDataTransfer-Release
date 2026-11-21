@@ -1,92 +1,44 @@
 using System.Collections.Concurrent;
-using System.Security.Cryptography;
 using CrossPlatformDataTransfer.Core.Interfaces.Services;
 using Microsoft.Extensions.Logging;
 
 namespace CrossPlatformDataTransfer.Infrastructure.Services;
 
 /// <summary>
-/// Enterprise-grade update service with retry policies and signature verification.
+/// Update integration that remains disabled until a trusted endpoint and
+/// signature verification key are configured.
 /// </summary>
 public class UpdateService : IUpdateService
 {
-    private readonly HttpClient _httpClient;
     private readonly ILogger<UpdateService> _logger;
-    private const int MaxRetries = 3;
-    private const int TimeoutSeconds = 30;
 
     public UpdateService(HttpClient httpClient, ILogger<UpdateService> logger)
     {
-        _httpClient = httpClient;
-        _httpClient.Timeout = TimeSpan.FromSeconds(TimeoutSeconds);
+        ArgumentNullException.ThrowIfNull(httpClient);
         _logger = logger;
     }
 
     /// <summary>
-    /// Checks for updates with an exponential backoff retry policy.
+    /// Reports that update checks are unavailable until a trusted endpoint is configured.
     /// </summary>
-    public async Task<UpdateCheckResult> CheckForUpdatesAsync()
+    public Task<UpdateCheckResult> CheckForUpdatesAsync()
     {
-        int attempt = 0;
-        while (attempt < MaxRetries)
-        {
-            try
-            {
-                _logger.LogInformation($"Checking for updates (Attempt {attempt + 1})...");
-                // Mocked update check logic
-                return await Task.FromResult(new UpdateCheckResult(false, "1.2.0", "https://example.com/update.zip", "Enterprise Grade Release"));
-            }
-            catch (Exception ex) when (attempt < MaxRetries - 1)
-            {
-                attempt++;
-                var delay = TimeSpan.FromSeconds(Math.Pow(2, attempt));
-                _logger.LogWarning(ex, $"Update check failed. Retrying in {delay.TotalSeconds}s...");
-                await Task.Delay(delay);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Update check failed after all attempts.");
-                return new UpdateCheckResult(false, string.Empty, string.Empty, "Update check failed.");
-            }
-        }
-        return new UpdateCheckResult(false, string.Empty, string.Empty, "Unknown error.");
+        _logger.LogWarning("Update checks are disabled because no trusted update endpoint is configured.");
+        return Task.FromResult(new UpdateCheckResult(
+            false,
+            string.Empty,
+            string.Empty,
+            "Update service is not configured."));
     }
 
     /// <summary>
-    /// Downloads and installs update after verifying digital signature.
+    /// Refuses installation because package signature verification is not configured.
     /// </summary>
-    public async Task<bool> DownloadAndInstallUpdateAsync(UpdateCheckResult update)
+    public Task<bool> DownloadAndInstallUpdateAsync(UpdateCheckResult update)
     {
-        if (!update.HasUpdate) return false;
-
-        try 
-        {
-            _logger.LogInformation($"Downloading update {update.Version} from {update.DownloadUrl}");
-            // Mock download
-            byte[] updateData = new byte[1024]; // Mock data
-            byte[] signature = new byte[64];    // Mock signature
-
-            if (!VerifyUpdateSignature(updateData, signature))
-            {
-                _logger.LogError("Update signature verification failed. Aborting installation.");
-                return false;
-            }
-
-            _logger.LogInformation("Update verified and ready for installation.");
-            return await Task.FromResult(true);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Failed to download or install update.");
-            return false;
-        }
-    }
-
-    private bool VerifyUpdateSignature(byte[] data, byte[] signature)
-    {
-        // In a real scenario, use a public key to verify the RSA/ECDSA signature
-        _logger.LogInformation("Verifying digital signature of the update package...");
-        return true; // Mocked for release
+        ArgumentNullException.ThrowIfNull(update);
+        _logger.LogWarning("Update installation is disabled because signature verification is not configured.");
+        return Task.FromResult(false);
     }
 }
 

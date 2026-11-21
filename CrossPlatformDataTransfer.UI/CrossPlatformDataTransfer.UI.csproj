@@ -15,5 +15,6 @@
     <ProjectReference Include="..\CrossPlatformDataTransfer.Application\CrossPlatformDataTransfer.Application.csproj" />
     <ProjectReference Include="..\CrossPlatformDataTransfer.Infrastructure\CrossPlatformDataTransfer.Infrastructure.csproj" />
     <ProjectReference Include="..\CrossPlatformDataTransfer.Infrastructure.Security\CrossPlatformDataTransfer.Infrastructure.Security.csproj" />
+    <ProjectReference Include="..\CrossPlatformDataTransfer.Startup\CrossPlatformDataTransfer.Startup.csproj" />
   </ItemGroup>
 </Project>

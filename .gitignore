@@ -7,3 +7,17 @@ obj/
 *.sln.docstates
 publish/
 *.zip
+verify-bin/
+.gradle/
+**/.gradle/
+build/
+**/build/
+local.properties
+**/local.properties
+.idea/
+*.apk
+*.aab
+*.jks
+*.keystore
+*.p12
+*.pfx

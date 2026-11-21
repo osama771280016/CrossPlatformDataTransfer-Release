@@ -11,6 +11,7 @@ public interface IAgentCommunicationService
     IAsyncEnumerable<byte[]> StreamDataAsync(AgentCommand command);
     Task SendEncryptedPayloadAsync(byte[] encryptedData);
     bool IsConnected { get; }
+    string? VerificationCode { get; }
 }
 
 public class AgentCommand

@@ -2,6 +2,7 @@ using CrossPlatformDataTransfer.Application.DTOs;
 using CrossPlatformDataTransfer.Application.Interfaces;
 using CrossPlatformDataTransfer.Core.Interfaces.Services;
 using CrossPlatformDataTransfer.Core.Interfaces.Repositories;
+using CrossPlatformDataTransfer.Core.Enums;
 
 namespace CrossPlatformDataTransfer.Application.UseCases;
 
@@ -11,6 +12,8 @@ public class DeviceDiscoveryUseCase : IDeviceDiscoveryUseCase
     private readonly IDeviceRepository _deviceRepository;
 
     public event EventHandler<DeviceDto>? DeviceDiscovered;
+    public event EventHandler<Guid>? DeviceDisconnected;
+    public event EventHandler<(Guid DeviceId, ConnectionStatus Status)>? DeviceStatusChanged;
 
     public DeviceDiscoveryUseCase(IDeviceDiscoveryService discoveryService, IDeviceRepository deviceRepository)
     {
@@ -18,6 +21,8 @@ public class DeviceDiscoveryUseCase : IDeviceDiscoveryUseCase
         _deviceRepository = deviceRepository;
         
         _discoveryService.DeviceDiscovered += OnDeviceDiscovered;
+        _discoveryService.DeviceDisconnected += (_, deviceId) => DeviceDisconnected?.Invoke(this, deviceId);
+        _discoveryService.DeviceStatusChanged += (_, change) => DeviceStatusChanged?.Invoke(this, change);
     }
 
     public async Task ExecuteAsync()
@@ -34,6 +39,7 @@ public class DeviceDiscoveryUseCase : IDeviceDiscoveryUseCase
         {
             Id = device.Id,
             Name = device.Name,
+            SerialNumber = device.SerialNumber,
             IpAddress = device.IpAddress,
             Type = device.Type.ToString(),
             ConnectionStatus = device.ConnectionStatus.ToString(),

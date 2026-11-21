@@ -1,12 +1,13 @@
 namespace CrossPlatformDataTransfer.Core.Interfaces.Services;
 
+/// <summary>
+/// Narrow ADB operations used by the application. Arbitrary shell commands,
+/// direct device file access, and root commands are intentionally unavailable.
+/// </summary>
 public interface IAdbService
 {
-    Task<string> ExecuteAdbCommandAsync(string arguments);
     Task<IEnumerable<string>> GetConnectedDeviceSerialsAsync();
     Task<string> GetDeviceInfoAsync(string serial);
-    Task<bool> PullFileAsync(string serial, string remotePath, string localPath);
-    Task<bool> PushFileAsync(string serial, string localPath, string remotePath);
-    Task<string> ExecuteRootCommandAsync(string serial, string command);
-    Task<bool> IsDeviceRootedAsync(string serial);
+    Task ForwardPortAsync(string serial, int localPort, int remotePort);
+    Task RemoveForwardAsync(string serial, int localPort);
 }

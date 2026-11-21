@@ -16,7 +16,6 @@ public static class DependencyInjection
         services.AddSingleton<ITransferService, AndroidSmsTransferService>();
         services.AddSingleton<SmsNormalizationService>();
         services.AddSingleton<IAgentCommunicationService, AndroidAgentClient>();
-        services.AddSingleton<ITcpAgentServer, TcpAgentServer>();
         services.AddSingleton<IDeviceRepository, MockDeviceRepository>();
         services.AddHttpClient<IUpdateService, UpdateService>();
         services.AddSingleton<ITelemetryService, TelemetryService>();

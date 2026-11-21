@@ -9,7 +9,7 @@ public class AdbDeviceDiscoveryService : IDeviceDiscoveryService
     private readonly IAdbService _adbService;
     private bool _isScanning;
     private readonly CancellationTokenSource _cts = new();
-    private readonly HashSet<string> _detectedSerials = new();
+    private readonly Dictionary<string, Device> _devicesBySerial = new(StringComparer.Ordinal);
 
     public event EventHandler<Device>? DeviceDiscovered;
     public event EventHandler<Guid>? DeviceDisconnected;
@@ -49,31 +49,49 @@ public class AdbDeviceDiscoveryService : IDeviceDiscoveryService
         try
         {
             var currentSerials = await _adbService.GetConnectedDeviceSerialsAsync();
-            var currentSerialList = currentSerials.ToList();
+            var currentSerialSet = new HashSet<string>(currentSerials, StringComparer.Ordinal);
 
             // Check for new devices
-            foreach (var serial in currentSerialList)
+            foreach (var serial in currentSerialSet)
             {
-                if (!_detectedSerials.Contains(serial))
+                if (!_devicesBySerial.TryGetValue(serial, out var device))
                 {
                     var model = await _adbService.GetDeviceInfoAsync(serial);
-                    var device = new Device
+                    device = new Device
                     {
-                        Id = Guid.NewGuid(), // Mapping serial to Guid would happen in a repository
+                        Id = Guid.NewGuid(),
+                        SerialNumber = serial,
                         Name = $"{model.Trim()} ({serial})",
                         Type = DeviceType.Android,
                         ConnectionStatus = ConnectionStatus.Connected,
-                        LastSeen = DateTime.Now
+                        LastSeen = DateTime.UtcNow
                     };
 
-                    _detectedSerials.Add(serial);
+                    _devicesBySerial.Add(serial, device);
                     DeviceDiscovered?.Invoke(this, device);
+                }
+                else
+                {
+                    device.LastSeen = DateTime.UtcNow;
+                    if (device.ConnectionStatus != ConnectionStatus.Connected)
+                    {
+                        device.ConnectionStatus = ConnectionStatus.Connected;
+                        DeviceStatusChanged?.Invoke(this, (device.Id, device.ConnectionStatus));
+                    }
                 }
             }
 
             // Check for disconnected devices
-            // Note: In a real implementation, we would need a way to map the serial back to the original Guid
-            // For now, we focus on the structure.
+            foreach (var device in _devicesBySerial.Values)
+            {
+                if (device.ConnectionStatus == ConnectionStatus.Connected &&
+                    !currentSerialSet.Contains(device.SerialNumber))
+                {
+                    device.ConnectionStatus = ConnectionStatus.Disconnected;
+                    DeviceDisconnected?.Invoke(this, device.Id);
+                    DeviceStatusChanged?.Invoke(this, (device.Id, device.ConnectionStatus));
+                }
+            }
         }
         catch (Exception)
         {

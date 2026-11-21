@@ -86,6 +86,11 @@ Do not distribute the current Debug APK or Windows preview as a production relea
 *   Build backup/restore and official Android data modules only where platform APIs allow them.
 *   Complete security, reliability, compatibility, signing, packaging, and commercial release review.
 
+## Project governance (Arabic)
+
+* [الخطة الشاملة ذات 36 بوابة قبول](docs/PROJECT_MASTER_PLAN_AR.md)
+* [برومبت Claude للمراجعة والإشراف، مع سياسة أقل صلاحية](docs/CLAUDE_SUPERVISOR_PROMPT_AR.md)
+
 ---
 
 **Author:** Manus AI
